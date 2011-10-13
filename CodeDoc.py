@@ -1,16 +1,32 @@
 import sublime, sublime_plugin
-import re, os
+import os, re
 
 syntax_list = {
-	"PHP" : True
+	"PHP": True
 }
 
-class CodeDoc(sublime_plugin.EventListener):
+class CodedocCommand(sublime_plugin.TextCommand):
+	def write(self, view, str):
+		view.run_command('insert_snippet', {
+			'contents': str
+		})
+
+	def run(self, edit):
+		v = self.view
+		line = v.substr(v.line(
+			v.sel()[0].begin()
+		))
+		if line.find("/**") != -1:
+			self.write(v, "\n * ")
+		else:
+			self.write(v, "\n* ")
+
+class CodedocEv(sublime_plugin.EventListener):
 	def on_query_completions(self, view, prefix, locations):
 		# only complete single line/selection
 		if len(locations) != 1:
 			return []
-		
+
 		# check is supported type of file
 		syntax, _ = os.path.splitext(os.path.basename(view.settings().get('syntax')))
 		syntax = syntax_list.get(syntax)
@@ -25,17 +41,17 @@ class CodeDoc(sublime_plugin.EventListener):
 			return []
 		if m.group(1) != '/**':
 			return []
-		
+
 		# find end of completion line
 		currLineEnd = view.find('[\n\r]', locations[0])
 		if currLineEnd is None:
 			return []
-		
+
 		# find end of function/class declaration (php delimiter)
 		nextLineEnd = view.find('[{]', currLineEnd.end())
 		if nextLineEnd is None:
 			return []
-		
+
 		declaration = view.substr(sublime.Region(currLineEnd.end(), nextLineEnd.begin()))
 		if declaration.find("function") > -1:
 			snippet = self.expandPhpFunction(declaration)
@@ -45,16 +61,16 @@ class CodeDoc(sublime_plugin.EventListener):
 			snippet = self.expandPhpClass(declaration)
 			if snippet:
 				return [(u'/**', snippet)]
-		
+
 		return []
-		
+
 	def expandPhpClass(self, declaration):
 		snippet = '/**\n'
 		snippet += ' * ${1}\n'
 		snippet += ' * @package ${2:default}\n'
 		snippet += ' */'
 		return snippet
-	
+
 	def expandPhpFunction(self, declaration):
 		rex = re.compile("\((.*)\)", re.DOTALL)
 		m = rex.search(declaration)
@@ -68,12 +84,12 @@ class CodeDoc(sublime_plugin.EventListener):
 		for p in params:
 			p2 = p.find('=')
 			if p2 > -1:
-				p = p[0 : p2]
+				p = p[0: p2]
 			p = p.strip()
 			p = p.replace('$', '\$')
 			if p == '':
 				continue
-			snippet += ' * @param ${' + str(i) + ':type} ' + p + ' ${' + str(i+1) + '}\n'
+			snippet += ' * @param ${' + str(i) + ':type} ' + p + ' ${' + str(i + 1) + '}\n'
 			i += 2
 
 		snippet += ' * @return ${' + str(i) + ':type}\n'
