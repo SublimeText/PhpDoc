@@ -30,13 +30,7 @@ class CodedocEv(sublime_plugin.EventListener):
 		if syntax == None:
 			return []
 
-		line = view.substr(sublime.Region(view.line(locations[0]).a, locations[0]))
-
-		rex = re.compile("^\s*(.+)")
-		m = rex.match(line)
-		if not m:
-			return []
-		if m.group(1) != '/**':
+		if view.substr(sublime.Region(view.line(locations[0]).a, locations[0])).find("/**") == -1:
 			return []
 
 		# find end of completion line
@@ -45,7 +39,7 @@ class CodedocEv(sublime_plugin.EventListener):
 			return []
 
 		# find end of function/class declaration (php delimiter)
-		nextLineEnd = view.find('[{]', currLineEnd.end())
+		nextLineEnd = view.find('[{;]', currLineEnd.end())
 		if nextLineEnd is None:
 			return []
 
@@ -53,11 +47,11 @@ class CodedocEv(sublime_plugin.EventListener):
 		if declaration.find("function") > -1:
 			snippet = self.expandPhpFunction(declaration)
 			if snippet:
-				return [(u'/**', snippet)]
+				return [('/**', snippet)]
 		elif declaration.find("class") > -1:
 			snippet = self.expandPhpClass(declaration)
 			if snippet:
-				return [(u'/**', snippet)]
+				return [('/**', snippet)]
 
 		return []
 

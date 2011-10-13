@@ -1,3 +1,3 @@
 CodeDoc is a Sublime Text 2 plugin to speedup writing documenting comments.
 
-Currently, PhpDoc for PHP is supported. Doxygen should do too.
+Currently, PhpDoc for PHP is supported, therefore it is renamed to PhpDoc until support of other documentation types is added (if ever).
