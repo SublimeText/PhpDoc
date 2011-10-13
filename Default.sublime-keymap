@@ -1,12 +1,12 @@
 [
-    { "keys": ["enter"], "command": "codedoc", "context" :
+    { "keys": ["enter"], "command": "codedoc", "args": {"insert": "newline-first"}, "context" :
         [
             { "key": "setting.auto_indent", "operator": "equal", "operand": true },
             { "key": "selector", "operator" : "equal", "operand" : "comment.block.documentation.phpdoc.php"},
             { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\/\\*{2}$", "match_all": true }
         ]
     },
-    { "keys": ["enter"], "command": "codedoc", "context" :
+    { "keys": ["enter"], "command": "codedoc", "args": {"insert": "newline"}, "context" :
         [
             { "key": "setting.auto_indent", "operator": "equal", "operand": true },
             { "key": "selector", "operator" : "equal", "operand" : "comment.block.documentation.phpdoc.php"},

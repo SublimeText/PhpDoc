@@ -11,15 +11,12 @@ class CodedocCommand(sublime_plugin.TextCommand):
 			'contents': str
 		})
 
-	def run(self, edit):
+	def run(self, edit, insert=None):
 		v = self.view
-		line = v.substr(v.line(
-			v.sel()[0].begin()
-		))
-		if line.find("/**") != -1:
-			self.write(v, "\n * ")
-		else:
+		if insert == "newline":
 			self.write(v, "\n* ")
+		elif insert == "newline-first":
+			self.write(v, "\n * ")
 
 class CodedocEv(sublime_plugin.EventListener):
 	def on_query_completions(self, view, prefix, locations):
