@@ -2,5 +2,33 @@
     "scope": "comment.block.documentation.phpdoc.php",
     "completions":
     [
+    	{ "trigger" : "@access",     "contents": "@access ${1:accesstype}" },
+    	{ "trigger" : "@author",     "contents": "@author ${1:authorname}" },
+    	{ "trigger" : "@category",   "contents": "@category ${1:categoryname}" },
+    	{ "trigger" : "@copyright",  "contents": "@copyright ${1:copyright information}" },
+    	{ "trigger" : "@deprecated", "contents": "@deprecated" },
+    	{ "trigger" : "@example",    "contents": "@example ${1:file/path.php} ${2:description}" },
+    	{ "trigger" : "@filesource", "contents": "@filesource" },
+    	{ "trigger" : "@global",     "contents": "@global ${1:datatype} ${2:description}" },
+    	{ "trigger" : "@ignore",     "contents": "@ignore" },
+    	{ "trigger" : "@internal",   "contents": "@internal ${1:description}" },
+    	{ "trigger" : "@license",    "contents": "@license ${1:license url} ${2:license name}" },
+    	{ "trigger" : "@link",       "contents": "@link ${1:url} ${2:text}" },
+    	{ "trigger" : "@method",     "contents": "@method ${1:returntype} ${2:description}" },
+    	{ "trigger" : "@name",       "contents": "@name \\$${1:globalvariablename}" },
+    	{ "trigger" : "@package",    "contents": "@package ${1:packagename}" },
+    	{ "trigger" : "@param",      "contents": "@param \\$${1:datatype} ${2:paramname} ${3:description}" },
+    	{ "trigger" : "@property",   "contents": "@property ${1:datatype} ${2:description}" },
+    	{ "trigger" : "@return",     "contents": "@return ${1:datatype} ${2:description}" },
+    	{ "trigger" : "@see",        "contents": "@see ${1:php code uri}" },
+    	{ "trigger" : "@since",      "contents": "@since ${1:versionstring}" },
+    	{ "trigger" : "@static",     "contents": "@static" },
+    	{ "trigger" : "@staticvar",  "contents": "@staticvar ${1:datatype} ${2:description}" },
+    	{ "trigger" : "@subpackage", "contents": "@subpackage ${1:subpackagename}" },
+    	{ "trigger" : "@todo",       "contents": "@todo ${1:information string}" },
+    	{ "trigger" : "@tutorial",   "contents": "@tutorial ${2:${3:package}/${1:tutorialname}}#${4:section} ${5:description}" },
+    	{ "trigger" : "@uses",       "contents": "@uses ${1:php code uri} ${2:description}" },
+    	{ "trigger" : "@var",        "contents": "@var ${1:datatype} ${2:description}" },
+    	{ "trigger" : "@version",    "contents": "@version ${1:versionstring}" }
     ]
 }
