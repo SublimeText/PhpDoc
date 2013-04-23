@@ -17,7 +17,7 @@
     	{ "trigger" : "@method",     "contents": "@method ${1:returntype} ${2:description}" },
     	{ "trigger" : "@name",       "contents": "@name \\$${1:globalvariablename}" },
     	{ "trigger" : "@package",    "contents": "@package ${1:packagename}" },
-    	{ "trigger" : "@param",      "contents": "@param \\$${1:datatype} ${2:paramname} ${3:description}" },
+    	{ "trigger" : "@param",      "contents": "@param ${1:datatype} \\$${2:paramname} ${3:description}" },
     	{ "trigger" : "@property",   "contents": "@property ${1:datatype} ${2:description}" },
     	{ "trigger" : "@return",     "contents": "@return ${1:datatype} ${2:description}" },
     	{ "trigger" : "@see",        "contents": "@see ${1:php code uri}" },
