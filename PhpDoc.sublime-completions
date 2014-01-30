@@ -2,7 +2,8 @@
     "scope": "comment.block.documentation.phpdoc.php",
     "completions":
     [
-    	{ "trigger" : "@access",     "contents": "@access ${1:accesstype}" },
+        { "trigger" : "@access",     "contents": "@access ${1:accesstype}" },
+        { "trigger" : "@api",        "contents": "@api" },
     	{ "trigger" : "@author",     "contents": "@author ${1:authorname}" },
     	{ "trigger" : "@category",   "contents": "@category ${1:categoryname}" },
     	{ "trigger" : "@copyright",  "contents": "@copyright ${1:copyright information}" },
@@ -25,6 +26,7 @@
     	{ "trigger" : "@static",     "contents": "@static" },
     	{ "trigger" : "@staticvar",  "contents": "@staticvar ${1:datatype} ${2:description}" },
     	{ "trigger" : "@subpackage", "contents": "@subpackage ${1:subpackagename}" },
+        { "trigger" : "@throws",     "contents": "@throws ${1:type} ${2:description}" },
     	{ "trigger" : "@todo",       "contents": "@todo ${1:information string}" },
     	{ "trigger" : "@tutorial",   "contents": "@tutorial ${2:${3:package}/${1:tutorialname}}#${4:section} ${5:description}" },
     	{ "trigger" : "@uses",       "contents": "@uses ${1:php code uri} ${2:description}" },
