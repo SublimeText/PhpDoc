@@ -1,6 +1,6 @@
 #PHPDoc
 
-CodeDoc is a Sublime Text 2 plugin to speedup writing documenting comments.
+CodeDoc is a Sublime Text 2/3 plugin to speedup writing documenting comments.
 
 Currently, [PhpDoc](http://phpdoc.org/) for PHP is supported, therefore CodeDoc is renamed to PhpDoc until support of other documentation types is added (if ever).
 
