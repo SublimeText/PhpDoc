@@ -52,6 +52,10 @@ class CodedocEv(sublime_plugin.EventListener):
 			snippet = self.expandPhpClass(declaration)
 			if snippet:
 				return [('/**', snippet)]
+		elif (declaration.find("public") > -1 or declaration.find("private") > -1 or declaration.find("protected") > -1) and declaration.find("$") > -1:
+			snippet = self.expandPhpVar(declaration)
+			if snippet:
+				return [('/**', snippet)]
 
 		return []
 
@@ -59,6 +63,12 @@ class CodedocEv(sublime_plugin.EventListener):
 		snippet = '/**\n'
 		snippet += ' * ${1}\n'
 		snippet += ' * @package ${2:default}\n'
+		snippet += ' */'
+		return snippet
+
+	def expandPhpVar(self, declaration):
+		snippet = '/**\n'
+		snippet += ' * @var ${1:type}\n'
 		snippet += ' */'
 		return snippet
 
@@ -81,7 +91,7 @@ class CodedocEv(sublime_plugin.EventListener):
 					defval = 'bool'
 				elif dval == 'null':
 					defval = 'null'
-				elif dval.find('array(') == 0:
+				elif dval.find('array(') == 0 or dval[0] == '[':
 					defval = 'array'
 				elif dval[0] == '"' or dval[0] == '\'':
 					defval = 'string'
