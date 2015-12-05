@@ -52,6 +52,10 @@ class CodedocEv(sublime_plugin.EventListener):
 			snippet = self.expandPhpClass(declaration)
 			if snippet:
 				return [('/**', snippet)]
+		elif (declaration.find("public") > -1 or declaration.find("private") > -1 or declaration.find("protected") > -1) and declaration.find("$") > -1:
+			snippet = self.expandPhpVar(declaration)
+			if snippet:
+				return [('/**', snippet)]
 
 		return []
 
@@ -59,6 +63,12 @@ class CodedocEv(sublime_plugin.EventListener):
 		snippet = '/**\n'
 		snippet += ' * ${1}\n'
 		snippet += ' * @package ${2:default}\n'
+		snippet += ' */'
+		return snippet
+
+	def expandPhpVar(self, declaration):
+		snippet = '/**\n'
+		snippet += ' * @var ${1:type}\n'
 		snippet += ' */'
 		return snippet
 
@@ -73,14 +83,44 @@ class CodedocEv(sublime_plugin.EventListener):
 
 		i = 2
 		for p in params:
+			defval = ''
 			p2 = p.find('=')
 			if p2 > -1:
+				dval = p[p2+1:].lower().strip()
+				if dval == 'true' or dval == 'false':
+					defval = 'bool'
+				elif dval == 'null':
+					defval = 'null'
+				elif dval.find('array(') == 0 or dval[0] == '[':
+					defval = 'array'
+				elif dval[0] == '"' or dval[0] == '\'':
+					defval = 'string'
+
+				if defval == '':
+					rex = re.compile("^[0-9].+")
+					m = rex.search(dval)
+					if m:
+						defval = 'int'
+				elif defval == '':
+					defval = dval;
+
 				p = p[0: p2]
+
 			p = p.strip()
+
 			p = p.replace('$', '\$')
 			if p == '':
 				continue
-			snippet += ' * @param ${' + str(i) + ':type} ' + p + ' ${' + str(i + 1) + '}\n'
+
+			p3 = p.find(' ')
+			if p3 > -1:
+				type = p[0:p3] + ('|' if defval != '' else '')
+				p = p[p3+1:].strip()
+			else:
+				type = '${' + str(i) + ':type' + ('|' if defval != '' else '')  + '}'
+
+
+			snippet += ' * @param ' + type + defval + ' ' + p + ' ${' + str(i + 1) + '}\n'
 			i += 2
 
 		snippet += ' * @return ${' + str(i) + ':type}\n'
