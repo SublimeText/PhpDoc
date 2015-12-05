@@ -95,7 +95,7 @@ class CodedocEv(sublime_plugin.EventListener):
 					defval = 'array'
 				elif dval[0] == '"' or dval[0] == '\'':
 					defval = 'string'
-				
+
 				if defval == '':
 					rex = re.compile("^[0-9].+")
 					m = rex.search(dval)
@@ -119,10 +119,10 @@ class CodedocEv(sublime_plugin.EventListener):
 			else:
 				type = '${' + str(i) + ':type' + ('|' if defval != '' else '')  + '}'
 
-			
-			snippet += ' * @param\t' + type + defval + ' ' + p + ' ${' + str(i + 1) + '}\n'
+
+			snippet += ' * @param ' + type + defval + ' ' + p + ' ${' + str(i + 1) + '}\n'
 			i += 2
 
-		snippet += ' * @return\t${' + str(i) + ':type}\n'
+		snippet += ' * @return ${' + str(i) + ':type}\n'
 		snippet += ' */'
 		return snippet
