@@ -48,7 +48,7 @@ class CodedocEv(sublime_plugin.EventListener):
 			snippet = self.expandPhpFunction(declaration)
 			if snippet:
 				return [('/**', snippet)]
-		elif (declaration.find("class") or declaration.find("interface") or declaration.find("trait")) > -1:
+		elif (declaration.find("class") > -1 or declaration.find("interface") > -1 or declaration.find("trait") > -1):
 			snippet = self.expandPhpClass(declaration)
 			if snippet:
 				return [('/**', snippet)]
